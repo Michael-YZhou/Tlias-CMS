@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from a repository -->
     </parent>
     <groupId>com.tlias</groupId>
-    <artifactId>tlias-cms</artifactId>
+    <artifactId>tlias</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>tlias-cms</name>
     <description>tlias-cms</description>

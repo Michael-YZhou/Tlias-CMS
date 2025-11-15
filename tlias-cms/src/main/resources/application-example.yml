@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: tlias-cms
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/your_db_name
+    username: your_username
+    password: your_password
+
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+#  mapper-locations: classpath:mapper/*.xml

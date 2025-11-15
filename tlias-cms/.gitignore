@@ -1,33 +1,68 @@
-HELP.md
+########################################
+# Build outputs
+########################################
 target/
+out/
+build/
+
+# Maven wrapper
 .mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
 
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
+########################################
+# Spring Boot configuration (secrets)
+########################################
 
-### IntelliJ IDEA ###
-.idea
-*.iws
+# REAL config should NOT be committed
+src/main/resources/application.yml
+src/main/resources/application.properties
+
+# Optional private profiles
+src/main/resources/application-*.yml
+src/main/resources/application-*.properties
+
+# BUT allow public template/example files
+!src/main/resources/application-example.yml
+!src/main/resources/application-example.properties
+
+########################################
+# IDE files
+########################################
+
+# IntelliJ IDEA
+.idea/
 *.iml
+*.iws
 *.ipr
 
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
-
-### VS Code ###
+# VS Code
 .vscode/
+
+# Eclipse / STS
+.classpath
+.project
+.settings/
+.apt_generated/
+.factorypath/
+.springBeans/
+.sts4-cache/
+
+# NetBeans
+nbproject/private/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+########################################
+# OS files
+########################################
+.DS_Store
+Thumbs.db
+
+########################################
+# Logs, temp files, caches
+########################################
+*.log
+logs/
+*.tmp
+*.cache

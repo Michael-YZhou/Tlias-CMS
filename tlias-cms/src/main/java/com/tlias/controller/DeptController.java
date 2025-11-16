@@ -3,11 +3,13 @@ package com.tlias.controller;
 import com.tlias.pojo.Dept;
 import com.tlias.pojo.Result;
 import com.tlias.service.DeptService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RequestMapping("/depts")
 @RestController
 public class DeptController {
@@ -21,7 +23,7 @@ public class DeptController {
      */
     @GetMapping
     public Result list() {
-        System.out.println( "find all departments");
+        log.info("find all departments");
         List<Dept> deptList = deptService.findAll();
         return Result.success(deptList);
     }
@@ -33,7 +35,7 @@ public class DeptController {
      */
     @DeleteMapping("/{id}")
     public Result delete(@PathVariable("id") Integer deptId) {
-        System.out.println( "delete department by id: " + deptId);
+        log.info("delete department by id: {}", deptId);
         deptService.deleteById(deptId);
         return Result.success();
     }
@@ -45,7 +47,7 @@ public class DeptController {
      */
     @PostMapping
     public Result add(@RequestBody Dept dept) {
-        System.out.println( "add department: " + dept);
+        log.info("add department: {}", dept);
         deptService.add(dept);
         return Result.success();
     }
@@ -57,7 +59,7 @@ public class DeptController {
      */
     @GetMapping("/{id}")
     public Result getDeptById(@PathVariable("id") Integer deptId) {
-        System.out.println( "get department by id: " + deptId);
+        log.info("get department by id: {}", deptId);
         Dept dept = deptService.getDeptById(deptId);
         return Result.success(dept);
     }
@@ -69,7 +71,7 @@ public class DeptController {
      */
     @PutMapping
     public Result updateDeptbyId(@RequestBody Dept dept){
-        System.out.println( "update department: " + dept);
+        log.info("update department by id: {}", dept);
         deptService.updateDeptbyId(dept);
         return Result.success();
     }

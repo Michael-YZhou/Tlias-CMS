@@ -4,29 +4,73 @@ import com.tlias.pojo.Dept;
 import com.tlias.pojo.Result;
 import com.tlias.service.DeptService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RequestMapping("/depts")
 @RestController
 public class DeptController {
 
     @Autowired
     private DeptService deptService;
 
-    @GetMapping("/depts")
+    /**
+     * find all departments
+     * @return dept list
+     */
+    @GetMapping
     public Result list() {
         System.out.println( "find all departments");
         List<Dept> deptList = deptService.findAll();
         return Result.success(deptList);
     }
 
-    @DeleteMapping("/depts")
-    public Result delete(Integer id) {
-        System.out.println( "delete department by id: " + id);
-        deptService.deleteById(id);
+    /**
+     * delete department by id
+     * @param deptId department id
+     * @return result
+     */
+    @DeleteMapping("/{id}")
+    public Result delete(@PathVariable("id") Integer deptId) {
+        System.out.println( "delete department by id: " + deptId);
+        deptService.deleteById(deptId);
+        return Result.success();
+    }
+
+    /**
+     * add department
+     * @param dept department object
+     * @return result
+     */
+    @PostMapping
+    public Result add(@RequestBody Dept dept) {
+        System.out.println( "add department: " + dept);
+        deptService.add(dept);
+        return Result.success();
+    }
+
+    /**
+     * get department by id
+     * @param deptId department id
+     * @return result
+     */
+    @GetMapping("/{id}")
+    public Result getDeptById(@PathVariable("id") Integer deptId) {
+        System.out.println( "get department by id: " + deptId);
+        Dept dept = deptService.getDeptById(deptId);
+        return Result.success(dept);
+    }
+
+    /**
+     * update department by id
+     * @param dept department object
+     * @return result
+     */
+    @PutMapping
+    public Result updateDeptbyId(@RequestBody Dept dept){
+        System.out.println( "update department: " + dept);
+        deptService.updateDeptbyId(dept);
         return Result.success();
     }
 }

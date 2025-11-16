@@ -5,6 +5,10 @@ import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
+/**
+ * Mapper interface for performing database operations on the Dept table.
+ * This interface provides methods for CRUD operations on department data.
+ */
 @Mapper
 public interface DeptMapper {
 

@@ -1,7 +1,7 @@
 package com.tlias.service.impl;
 
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.tlias.mapper.EmpMapper;
 import com.tlias.pojo.Emp;
 import com.tlias.pojo.PageResult;
@@ -38,13 +38,16 @@ public class EmpServiceImpl implements EmpService {
      */
     @Override
     public PageResult<Emp> pagination(Integer page, Integer pageSize) {
-        //
+        // set pagination criteria
         PageHelper.startPage(page, pageSize);
 
+        // execute query
         List<Emp> list = empMapper.list();
 
-        Page<Emp> p = (Page<Emp>) list;
+        // wrap the list into PageInfo object
+        PageInfo<Emp> pageInfo = new PageInfo<>(list);
 
-        return new PageResult<Emp>(p.getTotal(), p.getResult());
+        // pageInfo object provides methods to access information about the current page
+        return new PageResult<>(pageInfo.getTotal(), pageInfo.getList());
     }
 }

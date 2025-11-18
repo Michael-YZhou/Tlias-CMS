@@ -2,5 +2,6 @@
 <project version="4">
   <component name="DataSourcePerFileMappings">
     <file url="file://$PROJECT_DIR$/tlias-cms/src/main/java/com/tlias/mapper/DeptMapper.java" value="f7eeb334-831d-41e8-ba57-e57a6acf4e62" />
+    <file url="file://$PROJECT_DIR$/tlias-cms/src/main/resources/db/emp&amp;emp_expr.sql" value="f7eeb334-831d-41e8-ba57-e57a6acf4e62" />
   </component>
 </project>

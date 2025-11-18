@@ -1,8 +1,8 @@
 package com.tlias.mapper;
 
 import com.tlias.pojo.Emp;
+import com.tlias.pojo.EmpQueryParam;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -19,14 +19,7 @@ public interface EmpMapper {
 //    Long countEmp();
 //
 //    @Select("""
-//        SELECT e.id,
-//               e.name,
-//               e.create_time,
-//               e.update_time,
-//               e.job,
-//               e.image,
-//               e.dept_id,
-//               e.entry_date AS entryDate,
+//        SELECT e.*,
 //               d.name AS deptName
 //        FROM emp e
 //        LEFT JOIN dept d ON e.dept_id = d.id
@@ -38,23 +31,17 @@ public interface EmpMapper {
     /**
      * Select all rows for pagination.
      * No need to apply LIMIT because we use pageHelper in this case.
+     *
      * @return list of employees
      */
-    @Select("""
-        SELECT e.id,
-               e.name,
-               e.create_time,
-               e.update_time,
-               e.job,
-               e.image,
-               e.dept_id,
-               e.entry_date AS entryDate,
-               d.name AS deptName
-        FROM emp e
-        LEFT JOIN dept d ON e.dept_id = d.id
-        ORDER BY e.update_time DESC
-        """)
-    List<Emp> list();
+//    @Select("""
+//            SELECT e.*,
+//                   d.name AS deptName
+//            FROM emp e
+//                     LEFT JOIN dept d ON e.dept_id = d.id
+//            ORDER BY e.update_time DESC
+//            """)
+//    List<Emp> list(String name, Integer gender, LocalDate begin, LocalDate end);
 
-
+    List<Emp> list(EmpQueryParam empQueryParam);
 }

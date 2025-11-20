@@ -1,6 +1,8 @@
 package com.tlias.pojo;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
@@ -8,6 +10,8 @@ import java.time.LocalDate;
  * 工作经历
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class EmpExpr {
     private Integer id; //ID
     private Integer empId; //员工ID

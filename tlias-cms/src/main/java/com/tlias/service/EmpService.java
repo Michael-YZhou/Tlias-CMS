@@ -7,4 +7,6 @@ import com.tlias.pojo.PageResult;
 public interface EmpService {
 
     PageResult<Emp> pagination(EmpQueryParam empQueryParam);
+
+    void addEmp(Emp emp);
 }

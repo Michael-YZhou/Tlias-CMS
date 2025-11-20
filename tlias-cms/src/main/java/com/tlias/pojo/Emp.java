@@ -4,6 +4,7 @@ import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -13,7 +14,7 @@ public class Emp {
     private String password; //密码
     private String name; //姓名
     private Integer gender; //性别, 1:男, 2:女
-    private String phone; //手机号
+    private String phone = "11111111111"; //手机号
     private Integer job; //职位, 1:班主任,2:讲师,3:学工主管,4:教研主管,5:咨询师
     private Integer salary; //薪资
     private String image; //头像
@@ -26,5 +27,5 @@ public class Emp {
     //封装部门名称
     private String deptName;
     //封装工作经历
-    private List<EmpExpr> exprList;
+    private List<EmpExpr> exprList = new ArrayList<>(List.of(new EmpExpr(null, null, LocalDate.of(2025, 1, 1), LocalDate.of(2025, 1, 1), "未提供", "未提供")));
 }

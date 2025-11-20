@@ -2,14 +2,18 @@ package com.tlias.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.tlias.mapper.EmpExprMapper;
 import com.tlias.mapper.EmpMapper;
 import com.tlias.pojo.Emp;
+import com.tlias.pojo.EmpExpr;
 import com.tlias.pojo.EmpQueryParam;
 import com.tlias.pojo.PageResult;
 import com.tlias.service.EmpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -17,6 +21,9 @@ public class EmpServiceImpl implements EmpService {
 
     @Autowired
     private EmpMapper empMapper;
+
+    @Autowired
+    private EmpExprMapper empExprMapper;
 
 //    @Override
 //    public PageResult<Emp> pagination(@RequestParam Integer page, Integer pageSize) {
@@ -50,5 +57,20 @@ public class EmpServiceImpl implements EmpService {
 
         // pageInfo object provides methods to access information about the current page
         return new PageResult<>(pageInfo.getTotal(), pageInfo.getList());
+    }
+
+    @Transactional(rollbackFor = {Exception.class})  // transaction management for multiple db operations
+    @Override
+    public void addEmp(Emp emp) {
+        emp.setCreateTime(LocalDateTime.now());
+        emp.setUpdateTime(LocalDateTime.now());
+        empMapper.addEmp(emp);
+
+        List<EmpExpr> exprList = emp.getExprList();
+        if(!exprList.isEmpty()) {
+            // set empId for every empExpr object
+            exprList.forEach(empExpr -> empExpr.setEmpId(emp.getId()));
+            empExprMapper.insertBatch(exprList);
+        }
     }
 }

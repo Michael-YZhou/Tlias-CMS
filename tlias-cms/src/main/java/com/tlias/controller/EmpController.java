@@ -35,4 +35,11 @@ public class EmpController {
         PageResult<Emp> pageResult = empService.pagination(empQueryParam);
         return Result.success(pageResult);
     }
+
+    @PostMapping
+    public Result addEmp(@RequestBody Emp emp) {
+        log.info("Employee Add emp: {} ", emp);
+        empService.addEmp(emp);
+        return Result.success();
+    }
 }

@@ -4,10 +4,8 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.tlias.mapper.EmpExprMapper;
 import com.tlias.mapper.EmpMapper;
-import com.tlias.pojo.Emp;
-import com.tlias.pojo.EmpExpr;
-import com.tlias.pojo.EmpQueryParam;
-import com.tlias.pojo.PageResult;
+import com.tlias.pojo.*;
+import com.tlias.service.EmpLogService;
 import com.tlias.service.EmpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +22,9 @@ public class EmpServiceImpl implements EmpService {
 
     @Autowired
     private EmpExprMapper empExprMapper;
+
+    @Autowired
+    private EmpLogService empLogService;
 
 //    @Override
 //    public PageResult<Emp> pagination(@RequestParam Integer page, Integer pageSize) {
@@ -59,18 +60,30 @@ public class EmpServiceImpl implements EmpService {
         return new PageResult<>(pageInfo.getTotal(), pageInfo.getList());
     }
 
+    /**
+     * Adds an employee to the database, including their basic information and associated work experience.
+     * Handles transaction management and ensures atomic operations within the process.
+     *
+     * @param emp The employee object containing basic details and a list of work experience records.
+     */
     @Transactional(rollbackFor = {Exception.class})  // transaction management for multiple db operations
     @Override
     public void addEmp(Emp emp) {
-        emp.setCreateTime(LocalDateTime.now());
-        emp.setUpdateTime(LocalDateTime.now());
-        empMapper.addEmp(emp);
+        try {
+            emp.setCreateTime(LocalDateTime.now());
+            emp.setUpdateTime(LocalDateTime.now());
+            empMapper.addEmp(emp);
 
-        List<EmpExpr> exprList = emp.getExprList();
-        if(!exprList.isEmpty()) {
-            // set empId for every empExpr object
-            exprList.forEach(empExpr -> empExpr.setEmpId(emp.getId()));
-            empExprMapper.insertBatch(exprList);
+            List<EmpExpr> exprList = emp.getExprList();
+            if(!exprList.isEmpty()) {
+                // set empId for every empExpr object
+                exprList.forEach(empExpr -> empExpr.setEmpId(emp.getId()));
+                empExprMapper.insertBatch(exprList);
+            }
+        } finally {
+            // write log for insert a new employee
+            EmpLog empLog = new EmpLog(null, LocalDateTime.now(), "新增员工：" + emp);
+            empLogService.insertLog(empLog);
         }
     }
 }

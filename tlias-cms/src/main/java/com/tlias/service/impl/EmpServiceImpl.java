@@ -26,19 +26,6 @@ public class EmpServiceImpl implements EmpService {
     @Autowired
     private EmpLogService empLogService;
 
-//    @Override
-//    public PageResult<Emp> pagination(@RequestParam Integer page, Integer pageSize) {
-//        Long total = empMapper.countEmp();
-//
-//        if (total > 0) {
-//            Integer start = (page - 1) * pageSize;
-//            List<Emp> rows = empMapper.findPageEmp(start, pageSize);
-//            return new PageResult<>(total, rows);
-//        } else {
-//            return new PageResult<>(0L, null);
-//        }
-//    }
-
     /**
      * employee pagination query using pagehelper
      * @param empQueryParam employee query param object

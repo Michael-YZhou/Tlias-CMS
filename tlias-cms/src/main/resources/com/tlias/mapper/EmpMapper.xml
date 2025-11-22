@@ -21,4 +21,30 @@
         </where>
         ORDER BY e.update_time DESC
     </select>
+
+    <!--统计员工职位人数-->
+    <!--case函数最后以end结尾-->
+    <select id="countEmpJobData" resultType="java.util.Map">
+        select (case
+                    when job = 1 then '班主任'
+                    when job = 2 then '讲师'
+                    when job = 3 then '学工主管'
+                    when job = 4 then '教研主管'
+                    when job = 5 then '咨询师'
+                    else '其他' end) as pos,
+               count(*)              as num
+        from emp
+        group by job
+        order by num
+    </select>
+
+    <!--统计员工性别人数-->
+    <!--if（expr,val1,val2）如果表达式expr成立取val1，若expr不成立取val2-->
+    <!--ifnull(expr,val1)如果表达式expr不为空取自身，为null取val1-->
+    <select id="countEmpGenderData" resultType="java.util.Map">
+        select
+            if(gender = 1, '男性员工', '女性员工') as name,
+            count(*) as value
+        from emp group by gender
+    </select>
 </mapper>

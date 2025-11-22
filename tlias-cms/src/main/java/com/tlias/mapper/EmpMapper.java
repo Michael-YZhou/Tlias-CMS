@@ -3,10 +3,12 @@ package com.tlias.mapper;
 import com.tlias.pojo.Emp;
 import com.tlias.pojo.EmpQueryParam;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface EmpMapper {
@@ -60,4 +62,19 @@ public interface EmpMapper {
     @Insert("insert into emp(username, name, gender, phone, job, salary, image, entry_date, dept_id, create_time, update_time) " +
             "values(#{username}, #{name}, #{gender}, #{phone}, #{job}, #{salary}, #{image}, #{entrydate},#{deptId}, #{createTime}, #{updateTime})")
     void addEmp(Emp emp);
+
+    /**
+     * 统计员工职位人数
+     */
+    /*可能存在MybatisX插件误报 不用在意 或者在设置中编辑器中找到Mybatis选项关闭 或者添加上mapkey注解选项无报错不添加也行*/
+    @MapKey("pos")
+    List<Map<String,Object>> countEmpJobData();
+
+    /**
+     * 统计员工性别人数
+     * @return
+     */
+    @MapKey("gender")
+    List<Map<String, Object>> countEmpGenderData();
+
 }

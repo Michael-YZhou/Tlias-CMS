@@ -2,10 +2,8 @@ package com.tlias.mapper;
 
 import com.tlias.pojo.Emp;
 import com.tlias.pojo.EmpQueryParam;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.MapKey;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
+import com.tlias.pojo.LoginInfo;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 import java.util.Map;
@@ -64,17 +62,21 @@ public interface EmpMapper {
     void addEmp(Emp emp);
 
     /**
-     * 统计员工职位人数
+     * count employee by position
+     * @return list of map<String,Object>
      */
     /*可能存在MybatisX插件误报 不用在意 或者在设置中编辑器中找到Mybatis选项关闭 或者添加上mapkey注解选项无报错不添加也行*/
     @MapKey("pos")
     List<Map<String,Object>> countEmpJobData();
 
     /**
-     * 统计员工性别人数
-     * @return
+     * count employee by gender
+     * @return list of map<String,Object>
      */
     @MapKey("gender")
     List<Map<String, Object>> countEmpGenderData();
 
+    // select employee by username and password
+    @Select("select id, username, name from emp where username = #{username} and password = #{password}")
+    Emp selectByUserNameAndPassword(LoginInfo loginInfo);
 }

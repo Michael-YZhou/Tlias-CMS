@@ -7,6 +7,7 @@ import com.tlias.mapper.EmpMapper;
 import com.tlias.pojo.*;
 import com.tlias.service.EmpLogService;
 import com.tlias.service.EmpService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Slf4j
 @Service
 public class EmpServiceImpl implements EmpService {
 
@@ -72,5 +74,18 @@ public class EmpServiceImpl implements EmpService {
             EmpLog empLog = new EmpLog(null, LocalDateTime.now(), "新增员工：" + emp);
             empLogService.insertLog(empLog);
         }
+    }
+
+    @Override
+    public LoginInfo login(LoginInfo loginInfo) {
+        // call mapper to select user info based on username and password
+        Emp emp = empMapper.selectByUserNameAndPassword(loginInfo);
+        // if employee exist, assemble result
+        if(emp != null){
+            log.info("Login success, username: {}", loginInfo.getUsername());
+            return new LoginInfo(emp.getId(), emp.getUsername(), emp.getName(), "");
+        }
+        // if the employee doesn't exist, return null
+        return null;
     }
 }

@@ -7,13 +7,16 @@ import com.tlias.mapper.EmpMapper;
 import com.tlias.pojo.*;
 import com.tlias.service.EmpLogService;
 import com.tlias.service.EmpService;
+import com.tlias.utils.JwtUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Service
@@ -83,7 +86,13 @@ public class EmpServiceImpl implements EmpService {
         // if employee exist, assemble result
         if(emp != null){
             log.info("Login success, username: {}", loginInfo.getUsername());
-            return new LoginInfo(emp.getId(), emp.getUsername(), emp.getName(), "");
+            // generate JWT token
+            Map<String, Object> claims = new HashMap<>();
+            claims.put("id", emp.getId());
+            claims.put("username", emp.getUsername());
+            String jwt = JwtUtils.generateToken(claims);
+
+            return new LoginInfo(emp.getId(), emp.getUsername(), emp.getName(), jwt);
         }
         // if the employee doesn't exist, return null
         return null;

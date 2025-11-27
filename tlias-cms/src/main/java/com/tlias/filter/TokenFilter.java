@@ -56,7 +56,7 @@ public class TokenFilter implements Filter {
         log.info("令牌解析成功， 放行");
         chain.doFilter(request,response);
 
-        //删除threadlocal中的数据 在线程执行完之后，线程会自动销毁
+        //7.资源访问结束后，删除threadlocal中的数据 在线程执行完之后，线程会自动销毁
         CurrentHolder.remove();
     }
 }
